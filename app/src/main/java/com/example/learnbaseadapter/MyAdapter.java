@@ -37,23 +37,33 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
         //View view=mInflater.inflate(R.layout.item,null); 第一种方法，比较逗逼
         if (convertView == null) {
+            viewHolder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item, null);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.iv_image);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.tv_title);
+            viewHolder.content = (TextView) convertView.findViewById(R.id.tv_content);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.iv_image);
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.tv_title);
-        TextView contentTextView = (TextView) convertView.findViewById(R.id.tv_content);
 
         ItemBean bean = mList.get(position);
         System.out.println(position);
 
-        imageView.setImageResource(bean.itemImageId);
-        titleTextView.setText(bean.itemTitle);
-        contentTextView.setText(bean.itemContent);
+        viewHolder.imageView.setImageResource(bean.itemImageId);
+        viewHolder.title.setText(bean.itemTitle);
+        viewHolder.content.setText(bean.itemContent);
 
 
         return convertView;
+    }
+
+    class ViewHolder {
+        public ImageView imageView;
+        public TextView title;
+        public TextView content;
     }
 }
